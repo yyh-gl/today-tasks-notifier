@@ -36,6 +36,7 @@ GEM
       json
       oauth (>= 0.4.5)
       rest-client (>= 1.8.0)
+    slack-notifier (2.3.2)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
@@ -49,6 +50,7 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   ruby-trello
+  slack-notifier
 
 BUNDLED WITH
    2.0.1
