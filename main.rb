@@ -48,11 +48,16 @@ def send_slack(today_tasks)
   message = <<"MESSAGE"
 :pencil2::pencil2::pencil2: 今日のタスク :pencil2::pencil2::pencil2:
 
+:mega:全部で #{today_tasks[:main].size + today_tasks[:tech].size} 個のタスクがあるよ:mega:
+
+
             :mario2::dash: メイン :mario2::dash:
 MESSAGE
 
   today_tasks[:main].each_with_index do |task, i|
     message += ":small_orange_diamond:【M#{format('%02d', i + 1)}】 *_#{task.name}_*\n"
+
+    message += "    :curly_loop: _#{task.short_url} _\n"
 
     task.due.nil? ? limit = "なるはや" : limit = (task.due + 9.hour).to_s[0..-5]
     message += "    :alarm_clock: `#{limit}`\n\n"
@@ -60,7 +65,9 @@ MESSAGE
 
   message += "\n            :mario2::dash: 技術向上 :mario2::dash:\n"
   today_tasks[:tech].each_with_index do |task, i|
-    message += ":small_orange_diamond:【M#{format('%02d', i + 1)}】 *_#{task.name}_*\n"
+    message += ":small_orange_diamond:【T#{format('%02d', i + 1)}】 *_#{task.name}_*\n"
+
+    message += "    :curly_loop: _#{task.short_url} _\n"
 
     task.due.nil? ? limit = "なるはや" : limit = (task.due + 9.hour).to_s[0..-5]
     message += "    :alarm_clock: `#{limit}`\n\n"
