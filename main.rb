@@ -59,7 +59,8 @@ def send_slack(today_tasks)
   message = <<"MESSAGE"
 :pencil2::pencil2::pencil2: 今日のタスク :pencil2::pencil2::pencil2:
 
-:mega:全部で #{today_tasks[:main].size + today_tasks[:tech].size} 個のタスクがあるよ:mega:
+           :mega: 総タスク数 #{format('%02d', today_tasks[:main].size + today_tasks[:tech].size)} 個 :mega:
+   :space_invader: → 期限切れタスク数 #{format('%02d', today_tasks[:main_limit].size + today_tasks[:tech_limit].size)} 個 :space_invader:
 
 
            :mario2::dash: :kana-me::kana-i::kana-nn: :mario2::dash:
