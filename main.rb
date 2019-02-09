@@ -66,6 +66,8 @@ def send_slack(today_tasks)
 
 MESSAGE
 
+  last_index = 0
+
   # メインボード内のタスク一覧
   today_tasks[:main].each_with_index do |task, i|
     message += ":small_orange_diamond:【M#{format('%02d', i + 1)}】 *_#{task.name}_*\n"
@@ -74,15 +76,17 @@ MESSAGE
 
     task.due.nil? ? limit = "なるはや" : limit = (task.due + 9.hour).to_s[0..-5]
     message += "    :alarm_clock: `#{limit}`\n\n"
+
+    last_index = i + 1
   end
 
   # メインボード内の期限が切れているタスク一覧
   if today_tasks[:main_limit].present?
-    today_tasks[:main_limit].each_with_index do |task, i|
-      message += ":space_invader:【L#{format('%02d', i + 1)}】 *_#{task.name}_*\n"
+    today_tasks[:main_limit].each do |task|
+      last_index += 1
 
+      message += ":space_invader:【M#{format('%02d', last_index)}】 *_#{task.name}_*\n"
       message += "    :curly_loop: _#{task.short_url} _\n"
-
       message += "    :alarm_clock: `#{(task.due + 9.hour).to_s[0..-5]}` :face_palm:\n\n"
     end
   end
@@ -91,20 +95,21 @@ MESSAGE
   message += "\n          :mario2::dash: :kanji-waza::kanji-jutsu::kanji-mukau::kanji-ue: :mario2::dash:\n\n"
   today_tasks[:tech].each_with_index do |task, i|
     message += ":small_orange_diamond:【T#{format('%02d', i + 1)}】 *_#{task.name}_*\n"
-
     message += "    :curly_loop: _#{task.short_url} _\n"
 
     task.due.nil? ? limit = "なるはや" : limit = (task.due + 9.hour).to_s[0..-5]
     message += "    :alarm_clock: `#{limit}`\n\n"
+
+    last_index = i + 1
   end
 
   # 技術向上ボード内の期限が切れているタスク一覧
   if today_tasks[:tech_limit].present?
-    today_tasks[:tech_limit].each_with_index do |task, i|
-      message += ":space_invader:【L#{format('%02d', i + 1)}】 *_#{task.name}_*\n"
+    today_tasks[:tech_limit].each_with_index do |task|
+      last_index += 1
 
+      message += ":space_invader:【T#{format('%02d', last_index)}】 *_#{task.name}_*\n"
       message += "    :curly_loop: _#{task.short_url} _\n"
-
       message += "    :alarm_clock: `#{(task.due + 9.hour).to_s[0..-5]}` :face_palm:\n\n"
     end
   end
