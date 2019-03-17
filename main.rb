@@ -20,7 +20,6 @@ end
 ## システム全般
 # 今日の開始時間と終了時間を取得
 # タイムゾーンは関係ない。Timeクラスが吸収してくれる。
-# TODO: 14日深夜1:30ごろに、14日12:00ごろのタスクがとれてなかったので確認
 now = Time.now
 TODAY_START_TIME = Time.local(now.year, now.month, now.day, 0, 0, 0)
 TODAY_END_TIME = Time.local(now.year, now.month, now.day, 23, 59, 59)
